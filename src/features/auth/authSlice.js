@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Create axios instance with proper config
 const api = axios.create({
   baseURL: "http://localhost:4000",
   headers: {
@@ -9,7 +8,6 @@ const api = axios.create({
   }
 });
 
-// Interceptor to add token to requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {

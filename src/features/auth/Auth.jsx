@@ -18,20 +18,17 @@ export default function Auth() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // If logged in, navigate to home
     if (status === "succeeded" && isAuthenticated) {
       navigate("/");
     }
   }, [status, isAuthenticated, navigate]);
 
   useEffect(() => {
-    // Handle successful registration - switch to login form and show message
     if (status === "succeeded" && !isLogin && !isAuthenticated) {
       setSuccess(
         "Registration successful! Please login with your credentials."
       );
       setIsLogin(true);
-      // Reset form fields except username for convenience
       setUserData({
         name: "",
         username: userData.username,
@@ -58,13 +55,11 @@ export default function Auth() {
     }
   };
 
-  // Check if user is already logged in
   const isLoggedIn =
     isAuthenticated ||
     (localStorage.getItem("token") && localStorage.getItem("user"));
 
   const handleLogout = () => {
-    // Add logout functionality if needed - this would require a logout action in your authSlice
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.href = "/auth";
