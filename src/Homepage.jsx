@@ -161,7 +161,7 @@ export default function Homepage() {
         <div className="row align-items-center mt-5 pt-5">
           <div className="col-lg-6 mb-4 mb-lg-0">
             <img
-              src="https://source.unsplash.com/random/600x400/?album,photos"
+              src="https://th.bing.com/th/id/OIG4.JjMVsGleD8btg9lVtKI.?pid=ImgGn"
               className="img-fluid rounded-4 shadow"
               alt="Features"
             />
