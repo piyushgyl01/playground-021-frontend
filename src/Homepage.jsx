@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "./features/auth/authSlice";
+import Nav from "./components/Nav";
 
 export default function Homepage() {
   const dispatch = useDispatch();
@@ -16,98 +17,15 @@ export default function Homepage() {
       <div className="position-relative hero-section">
         <div
           className="hero-overlay position-absolute w-100 h-100 bg-dark"
-          style={{ opacity: 0.6 }}
+          style={{ opacity: 0.7 }}
         ></div>
         <img
           src="https://th.bing.com/th/id/OIG1.i9UFS19ekrCLe8BSENQq?w=1024&h=1024&rs=1&pid=ImgDetMain"
           className="img-fluid w-100"
           alt="Landing Page"
-          style={{ height: "80vh", objectFit: "cover" }}
         />
-        <div className="position-absolute top-0 start-0 w-100">
-          <div className="container">
-            <nav className="navbar navbar-expand-lg navbar-dark py-3">
-              <div className="container-fluid">
-                <Link className="navbar-brand fs-3 fw-bold" to="/">
-                  Picsilfy
-                </Link>
-                <button
-                  className="navbar-toggler"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarNav"
-                >
-                  <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                  <ul className="navbar-nav ms-auto">
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/albums">
-                        Albums
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/albums/shared">
-                        Shared
-                      </Link>
-                    </li>
-                    {user ? (
-                      <li className="nav-item dropdown">
-                        <a
-                          className="nav-link dropdown-toggle"
-                          href="#"
-                          role="button"
-                          data-bs-toggle="dropdown"
-                        >
-                          {user.name}
-                        </a>
-                        <ul className="dropdown-menu dropdown-menu-end">
-                          <li>
-                            <Link className="dropdown-item" to="/profile">
-                              Profile
-                            </Link>
-                          </li>
-                          <li>
-                            <Link className="dropdown-item" to="/settings">
-                              Settings
-                            </Link>
-                          </li>
-                          <li>
-                            <hr className="dropdown-divider" />
-                          </li>
-                          <li>
-                            <button
-                              className="dropdown-item text-danger"
-                              onClick={handleLogout}
-                            >
-                              Logout
-                            </button>
-                          </li>
-                        </ul>
-                      </li>
-                    ) : (
-                      <>
-                        <li className="nav-item">
-                          <Link className="nav-link" to="/login">
-                            Login
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            className="btn btn-light rounded-pill px-4"
-                            to="/register"
-                          >
-                            Sign Up
-                          </Link>
-                        </li>
-                      </>
-                    )}
-                  </ul>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
+
+        <Nav />
 
         {/* Hero Content */}
         <div className="position-absolute top-50 start-50 translate-middle text-center text-white w-75">
