@@ -7,7 +7,7 @@ import { BsSearch, BsX, BsImage, BsPerson, BsTag } from "react-icons/bs";
 
 // API instance with auth interceptor
 const api = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: "https://playground-021-backend.vercel.app",
   headers: {
     "Content-Type": "application/json",
   },
