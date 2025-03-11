@@ -83,6 +83,29 @@ export const toggleFav = createAsyncThunk(
   }
 );
 
+export const addComment = createAsyncThunk(
+  "image/addComment",
+  async ({ albumId, imageId, text }, { rejectWithValue }) => {
+    try {
+      const response = await api.post(
+        `/albums/${albumId}/images/${imageId}/comments`,
+        { text }
+      );
+      return { 
+        ...response.data,
+        imageId // Explicitly include imageId for use in the reducer
+      };
+    } catch (error) {
+      console.error('Add Comment Error:', error.response?.data || error.message);
+      return rejectWithValue(
+        error.response?.data || 
+        { message: "Failed to add comment", error: error.message }
+      );
+    }
+  }
+);
+
+
 export const deleteImage = createAsyncThunk(
   "image/deleteImage",
   async ({ albumId, imageId }, { rejectWithValue }) => {
@@ -90,7 +113,8 @@ export const deleteImage = createAsyncThunk(
       const response = await api.delete(
         `/albums/${albumId}/images/${imageId}`
       );
-      return response.data;
+      // Return both the response data and the imageId for use in the reducer
+      return { responseData: response.data, imageId };
     } catch (error) {
       console.error('Delete Image Error:', error.response?.data || error.message);
       return rejectWithValue(
@@ -168,14 +192,40 @@ export const imageSlice = createSlice({
     });
     builder.addCase(deleteImage.fulfilled, (state, action) => {
       state.status = "succeeded";
+      // Use the imageId from the action payload instead of trying to access payload.image._id
       state.images = state.images.filter(
-        (img) => img._id !== action.payload.image._id
+        (img) => img._id !== action.payload.imageId
       );
     });
     builder.addCase(deleteImage.rejected, (state, action) => {
       state.status = "failed";
       state.error = action.payload?.message || "Failed to delete image";
     });
+
+    // Add Comment
+builder.addCase(addComment.pending, (state) => {
+  state.status = "loading";
+  state.error = null;
+});
+builder.addCase(addComment.fulfilled, (state, action) => {
+  state.status = "succeeded";
+  // Find the image and add the comment to it
+  const imageIndex = state.images.findIndex(
+    (img) => img._id === action.payload.imageId
+  );
+  if (imageIndex !== -1) {
+    // If the image is found, push the new comment
+    if (!state.images[imageIndex].comments) {
+      state.images[imageIndex].comments = [];
+    }
+    state.images[imageIndex].comments.push(action.payload.comment);
+  }
+});
+builder.addCase(addComment.rejected, (state, action) => {
+  state.status = "failed";
+  state.error = action.payload?.message || "Failed to add comment";
+});
+
   },
 });
 

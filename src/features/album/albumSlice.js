@@ -228,14 +228,16 @@ export const albumSlice = createSlice({
     });
     builder.addCase(deleteAlbum.fulfilled, (state, action) => {
       state.status = "succeeded";
-      state.albums = state.albums.filter(
-        (album) => album._id !== action.payload.album._id
-      );
+      // Handle the case where the server doesn't return the album object
+      // Instead, use the ID that was passed to the thunk
+      const deletedId = action.meta.arg; // This gets the ID that was passed to deleteAlbum
+      state.albums = state.albums.filter((album) => album._id !== deletedId);
     });
     builder.addCase(deleteAlbum.rejected, (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
     });
+    
 
     // Add Shared Users
     builder.addCase(addSharedUsers.pending, (state) => {

@@ -12,6 +12,7 @@ import AddImage from "./pages/AddImage.jsx";
 import SharedAlbums from "./pages/SharedAlbums.jsx";
 import AlbumsPage from "./pages/AlbumsPage.jsx";
 import Layout from "./components/Layout.jsx";
+import ProfilePage from "./pages/Profile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/album/addImage/:albumId",
+        path: "/addImage/:albumId",
         element: (
           <PrivateRoute>
             <AddImage />
@@ -57,6 +58,14 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+            <ProfilePage />
+          </PrivateRoute>
+        )
+      }
     ],
   },
   {
